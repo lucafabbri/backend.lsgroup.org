@@ -1,0 +1,39 @@
+<div id="job-list" v-cloak>
+  <div class="container">
+    <h1>Offerte di lavoro</h1>
+    <hr/>
+    <ajax-form action="add-job" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()">
+      <div class="row">
+          <div class="col-sm">
+            <div class="form-group">
+              <label for="full-name">Titolo</label>
+              <input class="form-control" id="full-name" type="text" v-model.trim="formData.title" placeholder="Nome annuncio" autocomplete="title">
+            </div>
+          </div>
+          <div class="col-sm">
+            <div class="form-group">
+              <label for="full-name">Descrizione</label>
+              <textarea class="form-control" id="full-name" v-model.trim="formData.description" placeholder="Descrizione annuncio" autocomplete="description">
+            </div>
+          </div>
+          <div class="col-sm">
+            <div class="form-group">
+              <label for="full-name">Luogo</label>
+              <input class="form-control" id="full-name" type="text"  v-model.trim="formData.location" placeholder="Luogo" autocomplete="location">
+            </div>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-sm">
+            <div class="form-group">
+              <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block">Crea Job</ajax-button>
+            </div>
+        </div>
+      </div>
+    </ajax-form>
+    <ul class="list-group">
+      <li class="list-group-item"v-for="job in jobs">{{job.title}}</li>
+    </ul>
+  </div>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
