@@ -885,7 +885,9 @@
         throw new Error('Cannot use `virtualPages` because the specified value doesn\'t match any recognized meaning.  Please specify either `true` (for the default handling) or a dictionary of client-side routing rules.');
       }
     }//ﬁ  </ def has `virtualPages` >
-
+    def.components = {
+      'editor': Editor // <- Important part
+    };
     // Construct Vue instance for this page script.
     var vm = new Vue(def);
 

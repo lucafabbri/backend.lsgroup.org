@@ -1,12 +1,13 @@
 module.exports = {
 
 
-  friendlyName: 'Add job',
+  friendlyName: 'Edit job',
 
 
-  description: 'Add job.',
+  description: 'Edit job.',
 
   inputs:{
+    id:{type:'number'},
     title:{type:'string'},
     description:{type:'string'},
     language:{type:'string'},
@@ -18,7 +19,7 @@ module.exports = {
 
 
   fn: async function (inputs, exits){
-    await Job.create({
+    await Job.update({id:inputs.id},{
       title: inputs.title,
       description: inputs.description,
       language: inputs.language,

@@ -1,39 +1,130 @@
 <div id="job-list" v-cloak>
   <div class="container">
     <h1>Offerte di lavoro</h1>
-    <hr/>
-    <ajax-form action="add-job" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()">
+    <ajax-form v-if="addjob" action="addJob" :syncing.sync="syncing" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
       <div class="row">
           <div class="col-sm">
             <div class="form-group">
-              <label for="full-name">Titolo</label>
-              <input class="form-control" id="full-name" type="text" v-model.trim="formData.title" placeholder="Nome annuncio" autocomplete="title">
+              <label for="title">Titolo</label>
+              <input class="form-control" id="title" :class="[formErrors.title ? 'is-invalid' : '']" type="text" v-model.trim="formData.title" placeholder="Nome annuncio" autocomplete="title">
+              <div class="invalid-feedback" v-if="formErrors.title">Inserisci un titolo.</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm">
+            <div class="form-group">
+              <label for="location">Luogo</label>
+              <input class="form-control" id="location" :class="[formErrors.location ? 'is-invalid' : '']" type="text"  v-model.trim="formData.location" placeholder="Luogo" autocomplete="location">
+              <div class="invalid-feedback" v-if="formErrors.location">Inserisci il luogo</div>
             </div>
           </div>
           <div class="col-sm">
             <div class="form-group">
-              <label for="full-name">Descrizione</label>
-              <textarea class="form-control" id="full-name" v-model.trim="formData.description" placeholder="Descrizione annuncio" autocomplete="description">
-            </div>
-          </div>
-          <div class="col-sm">
-            <div class="form-group">
-              <label for="full-name">Luogo</label>
-              <input class="form-control" id="full-name" type="text"  v-model.trim="formData.location" placeholder="Luogo" autocomplete="location">
+              <label for="language">Lingua</label>
+              <select class="form-control" id="language" :class="[formErrors.language ? 'is-invalid' : '']" v-model.trim="formData.language" autocomplete="language">
+                <option value="it" selected>Italiano</option>
+                <option value="en" selected>Inglese</option>
+                <option value="fr" selected>Francese</option>
+                <option value="de" selected>Tedesco</option>
+                <option value="es" selected>Spagnolo</option>
+              </select>
+              <div class="invalid-feedback" v-if="formErrors.language">Scegli una lingua.</div>
             </div>
           </div>
       </div>
       <div class="row">
         <div class="col-sm">
+          <div class="form-group">
+            <label for="description">Descrizione</label>
+            <editor api-key="xsdkmi80um76nsedhzlkfk1il39n758a6bcieetoulxgdqa7" class="form-control" id="description" :class="[formErrors.description ? 'is-invalid' : '']" v-model.trim="formData.description" placeholder="Descrizione annuncio" autocomplete="description"></editor>
+            <div class="invalid-feedback" v-if="formErrors.description">Inserisci una descrizione.</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm">
             <div class="form-group">
-              <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block">Crea Job</ajax-button>
+              <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg">Salva</ajax-button>
             </div>
         </div>
       </div>
     </ajax-form>
-    <ul class="list-group">
-      <li class="list-group-item"v-for="job in jobs">{{job.title}}</li>
-    </ul>
+    <p v-else><button type="button" class="btn-dark btn-lg" @click="openAddJobForm">Aggiungi offerta di lavoro</button></p>
+    <ajax-form v-if="editjob" action="editJob" :syncing.sync="syncing" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+      <div class="row">
+          <div class="col-sm">
+            <div class="form-group">
+              <label for="title">Titolo</label>
+              <input class="form-control" id="title" :class="[formErrors.title ? 'is-invalid' : '']" type="text" v-model.trim="formData.title" placeholder="Nome annuncio" autocomplete="title">
+              <div class="invalid-feedback" v-if="formErrors.title">Inserisci un titolo.</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm">
+            <div class="form-group">
+              <label for="location">Luogo</label>
+              <input class="form-control" id="location" :class="[formErrors.location ? 'is-invalid' : '']" type="text"  v-model.trim="formData.location" placeholder="Luogo" autocomplete="location">
+              <div class="invalid-feedback" v-if="formErrors.location">Inserisci il luogo</div>
+            </div>
+          </div>
+          <div class="col-sm">
+            <div class="form-group">
+              <label for="language">Lingua</label>
+              <select class="form-control" id="language" :class="[formErrors.language ? 'is-invalid' : '']" v-model.trim="formData.language" autocomplete="language">
+                <option value="it" selected>Italiano</option>
+                <option value="en" selected>Inglese</option>
+                <option value="fr" selected>Francese</option>
+                <option value="de" selected>Tedesco</option>
+                <option value="es" selected>Spagnolo</option>
+              </select>
+              <div class="invalid-feedback" v-if="formErrors.language">Scegli una lingua.</div>
+            </div>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-sm">
+          <div class="form-group">
+            <label for="description">Descrizione</label>
+            <editor api-key="xsdkmi80um76nsedhzlkfk1il39n758a6bcieetoulxgdqa7" class="form-control" id="description" :class="[formErrors.description ? 'is-invalid' : '']" v-model.trim="formData.description" placeholder="Descrizione annuncio" autocomplete="description"></editor>
+            <div class="invalid-feedback" v-if="formErrors.description">Inserisci una descrizione.</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm">
+            <div class="form-group">
+              <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg">Salva</ajax-button>
+            </div>
+        </div>
+      </div>
+    </ajax-form>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Titolo</th>
+          <th scope="col">Descrizione</th>
+          <th scope="col">Luogo</th>
+          <th scope="col">Lingua</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="job in jobs">
+          <th scope="row">{{job.id}}</th>
+          <td>{{job.title}}</td>
+          <td v-html="job.description"></td>
+          <td>{{job.location}}</td>
+          <td>{{job.language}}</td>
+          <td>
+            <button type="button" class="btn-info btn-sm" @click="openEditJobForm(job)">Modifica</button>
+            <button type="button" class="btn-danger btn-sm" @click="deleteJob(job.id)">Elimina</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 <%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

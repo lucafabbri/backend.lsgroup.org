@@ -27,7 +27,6 @@ module.exports = {
     description: { type: 'string', required: true },
     language: { type: 'string', defaultsTo: 'it' },
     location: { type: 'string' },
-    published: {type: 'number' },
   },
 
 };
