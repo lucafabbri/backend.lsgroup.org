@@ -47,8 +47,8 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     default: {
-      // adapter: 'sails-mysql',
-      // url: 'mysql://user:password@host:port/database',
+      adapter: require('sails-mysql'),
+      url: 'mysql://lsgroup:3fLc^)kdK>BE2d*S@localhost:3306/alalunga',
       //--------------------------------------------------------------------------
       //  /\   To avoid checking it in to version control, you might opt to set
       //  ||   sensitive credentials like `url` using an environment variable.
@@ -151,8 +151,7 @@ module.exports = {
       // allowOrigins: [
       //   'https://example.com',
       // ]
-    },
-
+    }
   },
 
 
@@ -250,10 +249,7 @@ module.exports = {
     * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
     *                                                                          *
     ***************************************************************************/
-    // onlyAllowOrigins: [
-    //   'https://example.com',
-    //   'https://staging.example.com',
-    // ],
+    onlyAllowOrigins: ["http://localhost:1337","http://www.lsgroup.org", "http://backend.lsgroup.org", "http://lsgroup.org"]
 
 
     /***************************************************************************
@@ -371,8 +367,8 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    baseUrl: 'https://example.com',
-    internalEmailAddress: 'support@example.com',
+    baseUrl: 'https://backend.lsgroup.org',
+    internalEmailAddress: 'tecnico@zepfiro.com',
 
     // mailgunDomain: 'mg.example.com',
     // mailgunSecret: 'key-prod_fake_bd32301385130a0bafe030c',

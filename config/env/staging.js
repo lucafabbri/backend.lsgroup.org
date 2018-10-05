@@ -27,16 +27,6 @@ var PRODUCTION_CONFIG = require('./production');
 
 module.exports = Object.assign({}, PRODUCTION_CONFIG, {
 
-  datastores: Object.assign({}, PRODUCTION_CONFIG.datastores, {
-    default: Object.assign({}, PRODUCTION_CONFIG.datastores.default, {
-      // url: 'mysql://shared:some_password_everyone_knows@db.example.com:3306/my_staging_db',
-      //--------------------------------------------------------------------------
-      // /\  Hard-code your staging db `url`.
-      // ||  (or use system env var: `sails_datastores__default__url`)
-      //--------------------------------------------------------------------------
-    })
-  }),
-
   sockets: Object.assign({}, PRODUCTION_CONFIG.sockets, {
 
     onlyAllowOrigins: [
