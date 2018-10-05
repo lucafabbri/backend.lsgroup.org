@@ -47,7 +47,7 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     default: {
-      adapter: require('sails-mysql'),
+    adapter: require('sails-mysql'),
       url: 'mysql://lsgroup:3fLc^)kdK>BE2d*S@localhost:3306/alalunga',
       //--------------------------------------------------------------------------
       //  /\   To avoid checking it in to version control, you might opt to set
